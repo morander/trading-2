@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+</head>
+<body>
+    <h1>Task List</h1>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                {{ task.title }}
+                ({% if task.completed %}Completed{% else %}Not Completed{% endif %})
+                <a href="{{ url_for('main.edit_task', task_id=task.id) }}">Edit</a>
+                <form style="display: inline;" action="{{ url_for('main.delete_task', task_id=task.id) }}" method="post">
+                    <input type="submit" value="Delete">
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    <h2>Add New Task</h2>
+    <form action="{{ url_for('main.create_task') }}" method="post">
+        <input type="text" name="title" required placeholder="Task title">
+        <input type="text" name="description" placeholder="Task description">
+        <input type="submit" value="Add Task">
+    </form>
+</body>
+</html>
